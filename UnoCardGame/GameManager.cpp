@@ -8,8 +8,9 @@
 #include <stdlib.h>
 
 bool AI_Value = false;
+bool testing = false;
 
-void game(bool);
+void game(bool,bool);
 
 //int calculate_turn(bool x)
 //{
@@ -58,15 +59,17 @@ void GameManager::displayIntro()
 			break;
 
 	case 2: {bool AI_Value = false;
-		game(AI_Value);//play against AI; Funktionsaufruf game(false)
+		bool testing = false;
+		game(AI_Value);
 		break; }
 
 	case 3:   AI_Value = true;
-		game(AI_Value);//Funktionsaufruf game(true)
-		//calculate_turn(AI_Value);
+		bool testing = false;
+		game(AI_Value);
 		break;
 
-	case 4:  AI_Value = false;// testing
+	case 4:  AI_Value = false;
+		bool testing = true;
 		break;
 
 	case 5:  AI_Value = false;
@@ -126,7 +129,7 @@ Color FromString(const std::string & str, int x = 6)
 
 }
 
-void game(bool Smart_AI_Value)
+void game(bool Smart_AI_Value, bool testing = false)
 {
 	int amount_players = 2;
 	unsigned int turn = 0;
@@ -366,10 +369,11 @@ void game(bool Smart_AI_Value)
 		}
 
 	}
-	else if (Smart_AI_Value == true && turn % amount_players == 0)
+	else if (Smart_AI_Value == true && turn % amount_players == 0 || testing == true)
 	{
 		//funktionsaufruf SmartAI
 		int index = 0;
+		bool firstround = true;
 		player *curr_player = &play_array[0];
 		int size = curr_player->get_size();
 
@@ -379,7 +383,6 @@ void game(bool Smart_AI_Value)
 			{
 				if (played_card.number == 10)
 				{
-					//std::cout << "Forced Draw +2" << std::endl;
 					card draw_2;
 					for (int i = 0; i < 2; i++)
 					{
@@ -387,10 +390,8 @@ void game(bool Smart_AI_Value)
 					curr_player->hand_add(draw_2);
 					}
 				}
-
-				if (played_card.number == 14)
+				else if (played_card.number == 14)
 				{
-					//std::cout << "Forced Draw +4" << std::endl;
 					card draw_4;
 					for (int i = 0; i < 4; i++)
 					{
@@ -398,36 +399,49 @@ void game(bool Smart_AI_Value)
 					curr_player->hand_add(draw_4);
 					}
 				}
-
-				force_draw_bool = false;
+				else
+				{
+					force_draw_bool = false;
+				}
 			}
 
-			for(int i = 1; i <= size; i++)
-			{
 				card temp_card_mock;
-				if (played_card.color = wild)
+
+				while (firstround)
+				{
+					std::srand(time_t(NULL));
+					int coincidence = rand() % 4 + 1;
+					Color temp_color = FromString("zero", coincidence);
+					temp_card_mock.color = temp_color;
+					temp_card_mock.number = 11;
+				}
+
+				if (played_card.color == wild)
 				{
 					temp_card_mock.color = wild;
-					temp_card_mock.number = 13;
+					temp_card_mock.number = 14;
 				}
-				played_card.color;
 				
 				
-				if (played_card.number>=9)
+				if (played_card.number == 10)
 				{
+					temp_card_mock.number = 10;
+					std::srand(time_t(NULL));
+					int coincidence = rand() % 4 + 1;
+					Color temp_color = FromString("zero", coincidence);
+					temp_card_mock.color = temp_color;
+				}
+				else if (played_card.number == 14)
+				{
+					temp_card_mock.color = wild;
 					temp_card_mock.number = 14;
 				}
 				else
 				{
 					temp_card_mock.number = played_card.number + 1;
+					temp_card_mock.color = played_card.color;
 				}
-				
-				
 
-				//curr_player->peek = temp_card_mock;
-
-				card swap;
-				swap = played_card;
 				played_card = temp_card_mock;
 				temp_deck.add_card(played_card);
 				size--;
@@ -436,14 +450,9 @@ void game(bool Smart_AI_Value)
 				{
 					int check_color = 0;
 					Color temp_color;
-					//std::string str_color;
 
 					while (check_color == 0)
 					{
-						//std::cout << "Please choose a color(red, green, blue, yellow) :";
-						//std::cin >> str_color;
-						//temp_color = FromString(str_color);
-
 						std::srand(time_t(NULL));
 						int coincidence = rand() % 4 + 1;
 						temp_color = FromString("zero", coincidence);
@@ -461,22 +470,11 @@ void game(bool Smart_AI_Value)
 					}
 				}
 
-				if (played_card.number >= 10 && played_card.number <= 14)
-				{
-					force_draw_bool = true;
-				}
-
-
-
-				curr_player->hand_add(temp_card_mock);
-
-				
-				if (i == size -1)
+				if (size == 1)
 				{
 					std::cout << "Smart-AI-Player calls "; curr_player->uno();
 				}
-
-				if (curr_player->get_size() == 0)
+				else if (size == 0)
 				{
 					win = true;
 					std::cout << "Smart-AI-PLAYER " << turn % amount_players << "has won the game!" << std::endl;
@@ -486,30 +484,35 @@ void game(bool Smart_AI_Value)
 				{
 					turn += 2;
 				}
+				else
+				{
+					turn += 1;
+				}
 
 				std::system("CLS");
 
-				//std::cout << "Remaining cards: " << curr_player->get_size() << std::endl;
-				//std::cout << std::endl;
 				std::cout << "Played card: " << played_card << std::endl;
+				
+				if (played_card.number == 10 || played_card.number == 14)
+				{
+					force_draw_bool = true;
+				}
+				else if (played_card.number == 11 || played_card.number == 12)
+				{
+					std::cout << "The Smart-AI-Player let you skip this round" << std::endl;
+				}
 
-				turn += 1;
-			}
-
-
-
-
-
-
+				index += 1;
 		}
 
 
 	}
-	else if (Smart_AI_Value == false && turn % amount_players == 0)
+	else if ((Smart_AI_Value == false && turn % amount_players == 0) || testing == true)
 	{
+		if(testing == true)
+		//Funktionsaufruf Normaler-AI-Player
 		while (win != true)
 		{
-			//std::system("CLS");
 
 			player *curr_player = &play_array[0];
 
@@ -517,7 +520,6 @@ void game(bool Smart_AI_Value)
 			{
 				if (played_card.number == 10)
 				{
-					//std::cout << "Forced Draw +2" << std::endl;
 					card draw_2;
 					for (int i = 0; i < 2; i++)
 					{
@@ -528,7 +530,6 @@ void game(bool Smart_AI_Value)
 
 				if (played_card.number == 14)
 				{
-					//std::cout << "Forced Draw +4" << std::endl;
 					card draw_4;
 					for (int i = 0; i < 4; i++)
 					{
@@ -539,67 +540,14 @@ void game(bool Smart_AI_Value)
 
 				force_draw_bool = false;
 			}
-
-			//std::cout << "Number of Cards remaining: " << std::endl;
-			//std::cout << curr_player->get_size() << std::endl;
-
-			//std::cout << "Played Card: " << played_card << std::endl;
-			//curr_player->print();
-
 			int check_flag = 0;
-			//int index = 10;
 			int size = curr_player->get_size();
 
 			while (check_flag == 0)
 			{
-				//std::cout << "Which card do you want to play" << std::endl;
-				//std::cout << "If you want to draw a card please enter '-1'" << std::endl;
-				//std::cout << "Or type the index of the card and press enter:" << std::endl;
-				//std::cin >> index;
-
-			//	if (index == -1) //if keine spielbare karte auf der hand
-			//	{
-			//		card draw_temp;
-			//		draw_temp = main_deck.draw();
-			//		//std::cout << "DRAWN CARD: " << draw_temp << std::endl;
-
-			//		//if (draw_temp == played_card && draw_temp.color != wild)
-			//		//{
-			//			//int play_draw_flag = 0;
-
-			//		//	while (play_draw_flag == 0)
-			//		//	{
-			//				//std::string temp_play;
-			//		//		//std::cout << "Do you want to play the draw card? Please type 'y' for yes or 'n' for no!" << std::endl;
-			//		//		std::cin >> temp_play;
-
-			//		//		if (temp_play == "y") //nicht konsistent wenn wir alle Karten durchgehen
-			//		//		{
-			//					//played_card = draw_temp;
-			//		//			temp_deck.add_card(draw_temp);
-			//		//			if (played_card.number >= 10 && played_card.number <= 14)
-			//		//			{
-			//						//force_draw_bool = true;
-			//		//			}
-			//		//			play_draw_flag = 1;
-			//		//		}
-
-			//		//		if (temp_play == "n")
-			//		//		{
-			//		//			curr_player->hand_add(draw_temp);
-			//					//play_draw_flag = 1;
-			//		//		}
-
-			//		//}
-
-			//	
-			//		curr_player->hand_add(draw_temp);
-			//	}
-			//		check_flag = 1;
-			//}
-				int index = 0;
-				for (index; index <= size; index++)
-				{
+					int index = 0;
+					for (index; index <= size; index++)
+					{
 						card temp = curr_player->peek(index);
 						if (temp == played_card)
 						{
@@ -611,14 +559,9 @@ void game(bool Smart_AI_Value)
 							{
 								int check_color = 0;
 								Color temp_color;
-								//std::string str_color;
 
 								while (check_color == 0)
 								{
-									//std::cout << "Please choose a color(red, green, blue, yellow) :";
-									//std::cin >> str_color;
-									//temp_color = FromString(str_color);
-
 									std::srand(time_t(NULL));
 									int coincidence = rand() % 4 + 1;
 									temp_color = FromString("zero", coincidence);
@@ -634,39 +577,25 @@ void game(bool Smart_AI_Value)
 										std::cout << "AI invalid color" << std::endl;
 									}
 								}
-							}
-
-							if (played_card.number >= 10 && played_card.number <= 14)
-							{
-								force_draw_bool = true;
-							}
+							}					
 							check_flag = 1;
-							break;
+							break;	
 						}
-						//else
-						//{
-						//	std::cout << "Card cannot be played" << std::endl;
-						//	index++;
-						//}
-					
-
-					//else
-					//{
-						//std::cout << "Invalid index " << std::endl;
-					//}
-				}
-
+					}
+					if (check_flag == 0)
+					{
+						curr_player->hand_add(main_deck.draw());
+					}
 				if (index > size)
 				{
 					curr_player->hand_add(main_deck.draw());
 				}
 
-				if (curr_player->get_size() == 1)
+				if (size == 1)
 				{
 					std::cout << "AI-Player calls "; curr_player->uno();
 				}
-
-				if (curr_player->get_size() == 0)
+				else if (size == 0)
 				{
 					win = true;
 					std::cout << "AI-PLAYER " << turn % amount_players << "has won the game!" << std::endl;
@@ -678,13 +607,16 @@ void game(bool Smart_AI_Value)
 				}
 
 				std::system("CLS");
-
-				//std::cout << "Remaining cards: " << curr_player->get_size() << std::endl;
-				//std::cout << std::endl;
 				std::cout << "Played card: " << played_card << std::endl;
-
+				if (played_card.number == 10 || played_card.number == 14)
+				{
+					force_draw_bool = true;
+				}
+				else if (played_card.number == 11 || played_card.number == 12)
+				{
+					std::cout << "The Smart-AI-Player let you skip this round" << std::endl;
+				}
 				turn += 1;
-
 			}
 		}
 
