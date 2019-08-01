@@ -138,7 +138,7 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 	
 	//initializing two players
 	player * play_array;
-	player * curr_player = &play_array[2];
+	play_array[2];
 
 	//initializing deck
 	deck spezialdeck;
@@ -685,7 +685,6 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 
 		//initializing two players
 		player * play_array;
-		player * curr_player = &play_array[2];
 
 		//initializing deck
 		deck spezialdeck;
