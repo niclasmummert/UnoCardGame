@@ -15,28 +15,12 @@ bool force_draw_bool = false;
 unsigned int Random_AI_win = 0;
 unsigned int Smart_AI_win = 0;
 
-void AI_Player(card, deck, deck, player[]);
+void Random_AI_Player(card, deck, deck, player[]);
 void Smart_AI_Player(card, deck, deck, player[]);
 void human_Player(card, deck, deck, player[]);
+
 void start_game_flow(bool,bool);
 void start_test_flow(bool);
-
-
-
-//int calculate_turn(bool x)
-//{
-//	if (AI_Value == true)
-//	{
-//		turn = 1;
-//	}
-//	else
-//	{
-//		turn = 0;
-//	}
-//	return turn;
-//}
-
-
 
 void GameManager::displayIntro()
 {
@@ -244,7 +228,7 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 			{
 				if (turn % 2 == 0)
 				{
-					AI_Player(* played_card, *main_deck, *temp_deck,  Random_AI);
+					Random_AI_Player(* played_card, *main_deck, *temp_deck,  Random_AI);
 				}
 				else
 				{
@@ -300,7 +284,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 				curr_player->print();
 
 				int check_flag = 0;
-				int index;
+				int index = 0;
 				int size = curr_player->get_size();
 
 				//Human Player's turn
@@ -578,7 +562,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 	}
 
 	//Funktionsaufruf Normaler-AI-Player
-	void AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
+	void Random_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
 	{
 			player *curr_player = play_array[0];
 
@@ -759,6 +743,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 				storagedeck.add_card(temp_card);
 			}
 		}
+		//playing 100 times Smart-AI aginst Random-AI
 		for (int n = 0; n <= 100; n++)
 		{
 			while (win != true)
@@ -773,7 +758,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 					}
 					else
 					{
-						AI_Player(*played_card, *main_deck, *temp_deck, Random_AI);
+						Random_AI_Player(*played_card, *main_deck, *temp_deck, Random_AI);
 					}
 				}
 			}

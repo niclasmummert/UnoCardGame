@@ -5,13 +5,13 @@ class main:public GameManager
 public:
 	int start()
 	{
-		displayIntro();
+		void displayIntro();
 		return 0;
 	}
 };
 
 int main()
 {
-	GameManager::displayIntro;
+	void displayIntro();
 	return 0;
 }
