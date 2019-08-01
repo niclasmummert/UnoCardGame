@@ -69,13 +69,13 @@ void GameManager::displayIntro()
 		//Play against AI-Player
 	case 2: {bool AI_Value = false;
 		bool testing = false;
-		game(AI_Value);
+		game(AI_Value,false);
 		break; }
 
 		//Play against Smart-AI-Player
 	case 3:   AI_Value = true;
 		bool testing = false;
-		game(AI_Value);
+		game(AI_Value,false);
 		break;
 
 		//some testing //TO-DO
@@ -161,7 +161,7 @@ void game(bool Smart_AI_Value, bool testing = false)
 	int flag = 0;
 	////play_array = new player[amount_players];
 
-	//initializing danddeck of each player
+	//initializing handdeck of each player
 	for (int i = 0; i < amount_players; i++)
 	{
 
@@ -172,7 +172,7 @@ void game(bool Smart_AI_Value, bool testing = false)
 			play_array[i].hand_add(temp_card);
 		}
 	}
-
+	
 	bool turn_flag = true;
 	while (turn_flag == true)
 	{
@@ -194,7 +194,9 @@ void game(bool Smart_AI_Value, bool testing = false)
 	card *played_card = &cardd;
 	card temp_card;
 	temp_card = spezialdeck.draw();
-	deck temp_deck;
+	
+	deck storagedeck;
+	deck *temp_deck = &storagedeck;
 
 
 	//check if first card is permitted
@@ -208,7 +210,7 @@ void game(bool Smart_AI_Value, bool testing = false)
 		}
 		else
 		{
-			temp_deck.add_card(temp_card);
+			storagedeck.add_card(temp_card);
 		}
 	}
 
@@ -224,11 +226,11 @@ void game(bool Smart_AI_Value, bool testing = false)
 			{
 				if (turn % 2 == 0)
 				{
-					Smart_AI_Player(*played_card, *main_deck, deck temp_deck, player play_array[0]);
+					Smart_AI_Player(*played_card, *main_deck, *temp_deck, player play_array[0]);
 				}
 				else
 				{
-					human_Player(*played_card, *main_deck, deck temp_deck, player play_array[1]);
+					human_Player(*played_card, *main_deck, *temp_deck, player play_array[1]);
 				}
 			}
 		}
@@ -243,11 +245,11 @@ void game(bool Smart_AI_Value, bool testing = false)
 			{
 				if (turn % 2 == 0)
 				{
-					AI_Player(* played_card, *main_deck, deck temp_deck, player play_array[0]);
+					AI_Player(* played_card, *main_deck, *temp_deck, player play_array[0]);
 				}
 				else
 				{
-					human_Player(* played_card, *main_deck, deck temp_deck, player play_array[1]);
+					human_Player(* played_card, *main_deck, *temp_deck, player play_array[1]);
 				}
 			}
 		}
@@ -262,11 +264,11 @@ void game(bool Smart_AI_Value, bool testing = false)
 			{
 				if (turn % 2 == 0)
 				{
-					Smart_AI_Player(* played_card, *main_deck, deck temp_deck, player play_array[0]);
+					Smart_AI_Player(* played_card, *main_deck, *temp_deck, player play_array[0]);
 				}
 				else
 				{
-					AI_Player(* played_card, *main_deck, deck temp_deck, player play_array[1]);
+					AI_Player(* played_card, *main_deck, *temp_deck, player play_array[1]);
 				}
 			}
 		}
@@ -277,7 +279,7 @@ void game(bool Smart_AI_Value, bool testing = false)
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 
-void human_Player(card &played_card, deck &main_deck, deck temp_deck, player play_array[])
+void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player play_array[])
 	{
 			player *curr_player = &play_array[1];
 			std::system("CLS");
@@ -456,7 +458,7 @@ void human_Player(card &played_card, deck &main_deck, deck temp_deck, player pla
 }
 	
 	//funktionsaufruf SmartAI
-	void Smart_AI_Player(card &played_card, deck &main_deck, deck temp_deck, player play_array[])
+	void Smart_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player play_array[])
 	{
 	
 	int index = 0;
@@ -594,7 +596,7 @@ void human_Player(card &played_card, deck &main_deck, deck temp_deck, player pla
 	}
 
 	//Funktionsaufruf Normaler-AI-Player
-	void AI_Player(card &played_card, deck &main_deck, deck temp_deck, player play_array[])
+	void AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player play_array[])
 	{	
 		
 
