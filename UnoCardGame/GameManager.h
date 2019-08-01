@@ -12,7 +12,7 @@ class GameManager: public deck, player
 {
 public:
 	void displayIntro();
-	//void game(bool);
+
 
 
 	
