@@ -685,6 +685,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 
 		//initializing two players
 		player * play_array;
+		play_array[2];
 
 		//initializing deck
 		deck spezialdeck;

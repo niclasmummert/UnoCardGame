@@ -12,10 +12,6 @@ class GameManager: public deck, player
 {
 public:
 	void displayIntro();
-
-
-
-	
 };
 
 #endif // !GAMEMANAGER_H_
