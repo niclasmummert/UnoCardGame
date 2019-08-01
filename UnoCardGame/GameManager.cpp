@@ -12,11 +12,15 @@ bool testing = false;
 unsigned int turn = 0;
 bool win = false;
 bool force_draw_bool = false;
+unsigned int Random_AI_win = 0;
+unsigned int Smart_AI_win = 0;
 
 void AI_Player(card, deck, deck, player[]);
 void Smart_AI_Player(card, deck, deck, player[]);
 void human_Player(card, deck, deck, player[]);
-void game(bool,bool);
+void start_game_flow(bool,bool);
+void start_test_flow(bool);
+
 
 
 //int calculate_turn(bool x)
@@ -57,8 +61,7 @@ void GameManager::displayIntro()
 			std::cout << "A player who draws from the deck must either play or keep that card and may play no other card from their hand on that turn" << std::endl;
 			std::cout << "It is illegal to trade cards of any sort with another player" << std::endl;
 			std::cout << "A player who plays their 'next-to-last-card' must call 'UNO'" << std::endl;
-			std::cout << "The first player to get rid of their last card wins the game" << std::endl;
-		
+			std::cout << "The first player to get rid of their last card wins the game" << std::endl << std::endl;
 			std::cout << "UNO card game consists of 108 Cards; SKIP stands for 'Next player in sequence misses a turn'" << std::endl;
 			std::cout << "Reverse stands for 'Order of play switches directions', in our case it is equal to SKIP" << std::endl;
 			std::cout << "Draw +2 stands for 'Next player in sequence draws two cards and misses a turn'" << std::endl;
@@ -69,18 +72,19 @@ void GameManager::displayIntro()
 		//Play against AI-Player
 	case 2: {bool AI_Value = false;
 		bool testing = false;
-		game(AI_Value,false);
+		start_game_flow(AI_Value,false);
 		break; }
 
 		//Play against Smart-AI-Player
 	case 3:   AI_Value = true;
-		bool testing = false;
-		game(AI_Value,false);
+		testing = false;
+		start_game_flow(AI_Value,false);
 		break;
 
 		//some testing //TO-DO
 	case 4:  AI_Value = false;
-		bool testing = true;
+		testing = true;
+		start_test_flow(testing);
 		break;
 
 		//End Game
@@ -143,7 +147,7 @@ Color FromString(const std::string & str, int x = 6)
 }
 
 //initializing the basics like desks, player and cards. Calling the players depending on who is playing aigainst whom
-void game(bool Smart_AI_Value, bool testing = false)
+void start_game_flow(bool Smart_AI_Value, bool testing = false)
 {
 	int amount_players = 2;
 	std::system("CLS");
@@ -173,21 +177,16 @@ void game(bool Smart_AI_Value, bool testing = false)
 		}
 	}
 	
-	bool turn_flag = true;
-	while (turn_flag == true)
-	{
-		if (Smart_AI_Value == false)
-		{
-			player *Normal_AI = &play_array[0];
-			player *Human_Player = &play_array[1];
-		}
-		else
-		{
+	//bool turn_flag = true;
+	//while (turn_flag == true)
+	//{
+		//TO-DO
+			player *Random_AI = &play_array[0];
 			player *Smart_AI = &play_array[0];
 			player *Human_Player = &play_array[1];
-		}
-		turn_flag = false;
-	}
+		
+		//turn_flag = false;
+	//}
 
 	//initializing the playing card
 	card cardd;
@@ -216,7 +215,7 @@ void game(bool Smart_AI_Value, bool testing = false)
 
 
 	// calling the player-Functions depending on which opponent you choose
-	if (Smart_AI_Value == true)
+	if (Smart_AI_Value == true && testing == false)
 	{
 		while (win != true)
 		{
@@ -226,16 +225,16 @@ void game(bool Smart_AI_Value, bool testing = false)
 			{
 				if (turn % 2 == 0)
 				{
-					Smart_AI_Player(*played_card, *main_deck, *temp_deck, player play_array[0]);
+					Smart_AI_Player(*played_card, *main_deck, *temp_deck, Smart_AI);
 				}
 				else
 				{
-					human_Player(*played_card, *main_deck, *temp_deck, player play_array[1]);
+					human_Player(*played_card, *main_deck, *temp_deck, Random_AI);
 				}
 			}
 		}
 	}
-	else if(Smart_AI_Value == false)
+	else if(Smart_AI_Value == false && testing == false)
 	{
 		while (win != true)
 		{
@@ -245,30 +244,11 @@ void game(bool Smart_AI_Value, bool testing = false)
 			{
 				if (turn % 2 == 0)
 				{
-					AI_Player(* played_card, *main_deck, *temp_deck, player play_array[0]);
+					AI_Player(* played_card, *main_deck, *temp_deck,  Random_AI);
 				}
 				else
 				{
-					human_Player(* played_card, *main_deck, *temp_deck, player play_array[1]);
-				}
-			}
-		}
-	}
-	else if (testing == true)
-	{
-		while (win != true)
-		{
-
-			//Smart_AI_Player against AI_Player for testing
-			for (turn = 0; turn < 1000; turn++)
-			{
-				if (turn % 2 == 0)
-				{
-					Smart_AI_Player(* played_card, *main_deck, *temp_deck, player play_array[0]);
-				}
-				else
-				{
-					AI_Player(* played_card, *main_deck, *temp_deck, player play_array[1]);
+					human_Player(* played_card, *main_deck, *temp_deck, Human_Player);
 				}
 			}
 		}
@@ -279,9 +259,9 @@ void game(bool Smart_AI_Value, bool testing = false)
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 
-void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player play_array[])
+void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
 	{
-			player *curr_player = &play_array[1];
+			player *curr_player = play_array[1];
 			std::system("CLS");
 
 				//checking the played_card if player have to pick up card
@@ -458,12 +438,12 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player pl
 }
 	
 	//funktionsaufruf SmartAI
-	void Smart_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player play_array[])
+	void Smart_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
 	{
 	
 	int index = 0;
 	bool firstround = true;
-	player *curr_player = &play_array[0];
+	player *curr_player = play_array[0];
 	int size = curr_player->get_size();
 		
 		//checking the played_card if player have to pick up card	
@@ -569,6 +549,8 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player pl
 		{
 			std::cout << "Smart-AI-PLAYER has won the game!" << std::endl;
 			std::cout << "Thank you for playing the game!" << std::endl;
+			Smart_AI_win++;
+			win = true;
 		}
 		//REVERSE or SKIP card
 		if ((played_card.number == 11 || played_card.number == 12) && force_draw_bool == true)
@@ -596,11 +578,9 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player pl
 	}
 
 	//Funktionsaufruf Normaler-AI-Player
-	void AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player play_array[])
-	{	
-		
-
-			player *curr_player = &play_array[0];
+	void AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
+	{
+			player *curr_player = play_array[0];
 
 			//checking the played_card if player have to pick up card
 			if (force_draw_bool)
@@ -688,6 +668,8 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player pl
 				{
 					std::cout << "AI-PLAYER has won the game!" << std::endl;
 					std::cout << "Thank you for playing the game!" << std::endl;
+					Random_AI_win++;
+					win = true;
 				}
 
 				if ((played_card.number == 11 || played_card.number == 12) && force_draw_bool == true)
@@ -710,6 +692,93 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player pl
 				turn += 1;
 			}
 		
+	}
+
+	void start_test_flow(bool testing)
+	{
+		int amount_players = 2;
+		std::system("CLS");
+
+		//initializing two players
+		player * play_array;
+		player * curr_player = &play_array[2];
+
+		//initializing deck
+		deck spezialdeck;
+		deck *main_deck = &spezialdeck;
+		spezialdeck.create();
+		spezialdeck.shuffle();
+
+		int flag = 0;
+		////play_array = new player[amount_players];
+
+		//initializing handdeck of each player
+		for (int i = 0; i < amount_players; i++)
+		{
+
+			for (int k = 0; k < 7; k++)
+			{
+				card temp_card;
+				temp_card = spezialdeck.draw();
+				play_array[i].hand_add(temp_card);
+			}
+		}
+
+		//bool turn_flag = true;
+		//while (turn_flag == true)
+		//{
+			//TO-DO
+		player *Random_AI = &play_array[0];
+		player *Smart_AI = &play_array[0];
+		player *Human_Player = &play_array[1];
+
+		//turn_flag = false;
+	//}
+
+	//initializing the playing card
+		card cardd;
+		card *played_card = &cardd;
+		card temp_card;
+		temp_card = spezialdeck.draw();
+
+		deck storagedeck;
+		deck *temp_deck = &storagedeck;
+
+
+		//check if first card is permitted
+		bool firstcard = true;
+		while (firstcard == true)
+		{
+			if (temp_card.color != wild)
+			{
+				played_card = &temp_card;
+				firstcard = false;
+			}
+			else
+			{
+				storagedeck.add_card(temp_card);
+			}
+		}
+		for (int n = 0; n <= 100; n++)
+		{
+			while (win != true)
+			{
+
+				//Smart_AI_Player against AI_Player for testing
+				for (turn = 0; turn < 1000; turn++)
+				{
+					if (turn % 2 == 0)
+					{
+						Smart_AI_Player(*played_card, *main_deck, *temp_deck, Smart_AI);
+					}
+					else
+					{
+						AI_Player(*played_card, *main_deck, *temp_deck, Random_AI);
+					}
+				}
+			}
+		}
+		std::cout << "Der Smart-AI-Player gewinnt mit einer Wahrscheinlichkeit von: " <<  Smart_AI_win << "%!"  << std::endl;
 	}
 
 
