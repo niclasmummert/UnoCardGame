@@ -152,7 +152,6 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 	//initializing handdeck of each player
 	for (int i = 0; i < amount_players; i++)
 	{
-
 		for (int k = 0; k < 7; k++)
 		{
 			card temp_card;
