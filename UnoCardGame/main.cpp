@@ -6,7 +6,6 @@ public:
 	int start()
 	{
 		void displayIntro();
-		return 0;
 	}
 };
 

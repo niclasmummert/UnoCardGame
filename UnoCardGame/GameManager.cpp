@@ -15,9 +15,9 @@ bool force_draw_bool = false;
 unsigned int Random_AI_win = 0;
 unsigned int Smart_AI_win = 0;
 
-void Random_AI_Player(card, deck, deck, player[]);
-void Smart_AI_Player(card, deck, deck, player[]);
-void human_Player(card, deck, deck, player[]);
+void Random_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
+void Smart_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
+void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
 
 void start_game_flow(bool,bool);
 void start_test_flow(bool);
@@ -138,7 +138,7 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 	
 	//initializing two players
 	player * play_array;
-	play_array[2];
+	//play_array[2];
 
 	//initializing deck
 	deck spezialdeck;
@@ -147,7 +147,7 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 	spezialdeck.shuffle();
 
 	int flag = 0;
-	////play_array = new player[amount_players];
+	play_array = new player[2];
 
 	//initializing handdeck of each player
 	for (int i = 0; i < amount_players; i++)
@@ -208,11 +208,11 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 			{
 				if (turn % 2 == 0)
 				{
-					Smart_AI_Player(*played_card, *main_deck, *temp_deck, Smart_AI);
+					Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
 				}
 				else
 				{
-					human_Player(*played_card, *main_deck, *temp_deck, Random_AI);
+					human_Player(*played_card, *main_deck, *temp_deck, &Random_AI);
 				}
 			}
 		}
@@ -227,11 +227,11 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 			{
 				if (turn % 2 == 0)
 				{
-					Random_AI_Player(* played_card, *main_deck, *temp_deck,  Random_AI);
+					Random_AI_Player(* played_card, *main_deck, *temp_deck,  &Random_AI);
 				}
 				else
 				{
-					human_Player(* played_card, *main_deck, *temp_deck, Human_Player);
+					human_Player(* played_card, *main_deck, *temp_deck, &Human_Player);
 				}
 			}
 		}
@@ -245,7 +245,7 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
 	{
 			player *curr_player = play_array[1];
-			std::system("CLS");
+			//std::system("CLS");
 
 				//checking the played_card if player have to pick up card
 				if (force_draw_bool)
@@ -684,7 +684,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 
 		//initializing two players
 		player * play_array;
-		play_array[2];
+		//play_array[2];
 
 		//initializing deck
 		deck spezialdeck;
@@ -693,7 +693,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 		spezialdeck.shuffle();
 
 		int flag = 0;
-		////play_array = new player[amount_players];
+		play_array = new player[2];
 
 		//initializing handdeck of each player
 		for (int i = 0; i < amount_players; i++)
@@ -753,11 +753,11 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 				{
 					if (turn % 2 == 0)
 					{
-						Smart_AI_Player(*played_card, *main_deck, *temp_deck, Smart_AI);
+						Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
 					}
 					else
 					{
-						Random_AI_Player(*played_card, *main_deck, *temp_deck, Random_AI);
+						Random_AI_Player(*played_card, *main_deck, *temp_deck, &Random_AI);
 					}
 				}
 			}
