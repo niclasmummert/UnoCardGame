@@ -3,20 +3,17 @@
 #include "Card.h"
 #include <iostream>
 
-//muss auskommentiert werden wegen Konstruktor
 player::player()
 {
 	head = NULL;
 	size = 0;
 }
 
-//muss auskommentiert werden wegen Konstruktor
 player::player(const player & other)
 {
 	copy(other);
 }
 
-//ausprobieren obs so klappt, wenn nicht auswärts definieren in GameManager, da dieser erbt, mit override
 const player & player::operator=(const player & other)
 {
 	if (this != &other)
@@ -27,13 +24,11 @@ const player & player::operator=(const player & other)
 	return *this;
 }
 
-//Destruktor kann denk ich mal stehen bleiben
 player::~player()
 {
 	clear();
 }
 
-//definition auswärts
 card player::hand_remove(int pos)
 {
 	if (pos < 0 || pos >= size)
@@ -86,7 +81,6 @@ void player::uno()
 	std::cout << "'UNO' !!! "<<std::endl;
 }
 
-//definition auswärts
 void player::print() const
 {
 	int temp_size = size;
@@ -101,13 +95,11 @@ void player::print() const
 	}
 }
 
-//definition auswärts
 int player::get_size() const
 {
 	return size;
 }
 
-//definition auswärts
 card player::peek(int pos) const
 {
 	int temp_pos = pos;
@@ -120,7 +112,6 @@ card player::peek(int pos) const
 	return temp_elem->data;
 }
 
-//definition auswärts -> mal schauen ob so klappt wegen private
 void player::copy(const player & other)
 {
 	size = other.size;
@@ -151,7 +142,6 @@ void player::copy(const player & other)
 	}
 }
 
-//definition auswärts -> mal schauen ob so klappt wegen private
 void player::clear()
 {
 	card_elem * temp_ptr = head;

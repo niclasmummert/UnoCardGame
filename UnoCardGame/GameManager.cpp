@@ -2,25 +2,28 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Player.h"
+//#include "HumanPlayer.h"
+//#include "RandomAIPlayer.h"
+//#include"SmartAIPlayer.h"
 
 #include <iostream>
 #include <string>
 #include <stdlib.h>
 
 bool AI_Value = false;
-bool testing = false;
+//bool testing = false;
 unsigned int turn = 0;
-bool win = false;
-bool force_draw_bool = false;
-unsigned int Random_AI_win = 0;
-unsigned int Smart_AI_win = 0;
+extern bool win = false;
+extern bool force_draw_bool = false;
+extern unsigned int Random_AI_win = 0; //schauen ob dann globale Variable woanders definiert werden oder als Parameter
+extern unsigned int Smart_AI_win = 0;
 
 void Random_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
 void Smart_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
 void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
 
-void start_game_flow(bool,bool);
-void start_test_flow(bool, size_t);
+void start_game_flow(bool);
+void start_test_flow(size_t);
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -214,19 +217,16 @@ void GameManager::displayIntro()
 
 		//Play against AI-Player
 	case 2: {bool AI_Value = false;
-		bool testing = false;
-		start_game_flow(AI_Value,false);
+		start_game_flow(AI_Value);
 		break; }
 
 		//Play against Smart-AI-Player
 	case 3:   AI_Value = true;
-		testing = false;
-		start_game_flow(AI_Value,false);
+		start_game_flow(AI_Value);
 		break;
 
 		//some testing //TO-DO
 	case 4:  AI_Value = false;
-		testing = true;
 
 		system("CSL");
 		size_t n;
@@ -240,7 +240,7 @@ void GameManager::displayIntro()
 			}
 			else if (n>0)
 			{
-				start_test_flow(testing, n);
+				start_test_flow(n);
 			}
 			else { break; }
 		
@@ -306,14 +306,18 @@ Color FromString(const std::string & str, int x = 6)
 }
 
 //initializing the basics like desks, player and cards. Calling the players depending on who is playing aigainst whom
-void start_game_flow(bool Smart_AI_Value, bool testing = false)
+void start_game_flow(bool Smart_AI_Value)
 {
 	int amount_players = 2;
 	std::system("CLS");
 	
 	//initializing two players
 	player * play_array;
-	//play_array[2];
+	
+	//-> Instanzen initialisieren
+	//SmartAIPlayer SmartAIPlayer;
+	//HumanPlayer HumanPlayer;
+	//RandomAIPlayer RandomAIPlayer;
 
 	//initializing deck
 	deck spezialdeck;
@@ -323,10 +327,34 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 
 	int flag = 0;
 	play_array = new player[2];
+	//->braucht man nicht mehr
 
 	//initializing handdeck of each player
 	for (int i = 0; i < amount_players; i++)
 	{
+		//if(i=0 && AI_Value == false)
+		//{for (int k = 0; k < 7; k++)
+			//{
+				//card temp_card;
+				//temp_card = spezialdeck.draw();
+				//RandomAIPlayer.hand_add(temp_card);
+			//}
+		//}
+		//else if(i=0 && AI_Value == true)
+		//{for (int k = 0; k < 7; k++)
+			//{
+				//card temp_card;
+				//temp_card = spezialdeck.draw();
+				//SmartAIPlayer.hand_add(temp_card);
+			//}
+		//else
+		//{for (int k = 0; k < 7; k++)
+			//{
+				//card temp_card;
+				//temp_card = spezialdeck.draw();
+				//HumanPlayer.hand_add(temp_card);
+			//}
+		//}
 		for (int k = 0; k < 7; k++)
 		{
 			card temp_card;
@@ -334,17 +362,13 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 			play_array[i].hand_add(temp_card);
 		}
 	}
-	
-	//bool turn_flag = true;
-	//while (turn_flag == true)
-	//{
-		//TO-DO
-			player *Random_AI = &play_array[0];
-			player *Smart_AI = &play_array[0];
-			player *Human_Player = &play_array[1];
-		
-		//turn_flag = false;
-	//}
+
+	//TO-DO
+	player *Random_AI = &play_array[0];
+	player *Smart_AI = &play_array[0];
+	player *Human_Player = &play_array[1];
+	//-> hinf‰llig
+
 
 	//initializing the playing card
 	card cardd;
@@ -373,7 +397,7 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 
 
 	// calling the player-Functions depending on which opponent you choose
-	if (Smart_AI_Value == true && testing == false)
+	if (Smart_AI_Value == true)
 	{
 		while (win != true)
 		{
@@ -384,29 +408,33 @@ void start_game_flow(bool Smart_AI_Value, bool testing = false)
 				if (turn % 2 == 0)
 				{
 					Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
+					//SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, &SmartAIPlayer);
 				}
 				else
 				{
-					human_Player(*played_card, *main_deck, *temp_deck, &Random_AI);
+					human_Player(*played_card, *main_deck, *temp_deck, &Human_Player);
+					//HumanPlayer.play(*played_card, *main_deck, *temp_deck, &HumanPlayer);
 				}
 			}
 		}
 	}
-	else if(Smart_AI_Value == false && testing == false)
+	else if(Smart_AI_Value == false)
 	{
 		while (win != true)
 		{
 
-			//AI_Player against human_Player
+			//Random_AI_Player against human_Player
 			for (turn = 0; turn < 1000; turn++)
 			{
 				if (turn % 2 == 0)
 				{
 					Random_AI_Player(* played_card, *main_deck, *temp_deck,  &Random_AI);
+					//RandomAIPlayer.play(*played_card, *main_deck, *temp_deck, &RandomAIPlayer);
 				}
 				else
 				{
 					human_Player(* played_card, *main_deck, *temp_deck, &Human_Player);
+					//HumanPlayer.play(*played_card, *main_deck, *temp_deck, &HumanPlayer);
 				}
 			}
 		}
@@ -596,7 +624,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 }
 	
 	//funktionsaufruf SmartAI
-	void Smart_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
+void Smart_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
 	{
 	
 	int index = 0;
@@ -736,7 +764,7 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 	}
 
 	//Funktionsaufruf Normaler-AI-Player
-	void Random_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
+void Random_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[])
 	{
 			player *curr_player = play_array[0];
 
@@ -852,14 +880,17 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 		
 	}
 
-	void start_test_flow(bool testing, size_t n)
-	{
+void start_test_flow(size_t n)
+{
 		int amount_players = 2;
 		std::system("CLS");
 
 		//initializing two players
 		player * play_array;
-		//play_array[2];
+		//-> Instanzen initialisieren
+		//SmartAIPlayer SmartAIPlayer;
+		//RandomAIPlayer RandomAIPlayer;
+
 
 		//initializing deck
 		deck spezialdeck;
@@ -867,12 +898,28 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 		spezialdeck.create();
 		spezialdeck.shuffle();
 
-		int flag = 0;
 		play_array = new player[2];
+		//->hinf‰llig
 
 		//initializing handdeck of each player
 		for (int i = 0; i < amount_players; i++)
 		{
+			//if(i=0)
+			//{for (int k = 0; k < 7; k++)
+				//{
+					//card temp_card;
+					//temp_card = spezialdeck.draw();
+					//RandomAIPlayer.hand_add(temp_card);
+				//}
+			//}
+			//else
+			//{for (int k = 0; k < 7; k++)
+				//{
+					//card temp_card;
+					//temp_card = spezialdeck.draw();
+					//SmartAIPlayer.hand_add(temp_card);
+				//}
+			//}
 
 			for (int k = 0; k < 7; k++)
 			{
@@ -882,17 +929,12 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 			}
 		}
 
-		//bool turn_flag = true;
-		//while (turn_flag == true)
-		//{
 			//TO-DO
 		player *Random_AI = &play_array[0];
 		player *Smart_AI = &play_array[1];
 		//player *Human_Player = &play_array[1];
-
-		//turn_flag = false;
-	//}
-
+		//->hinf‰‰lig
+	
 	//initializing the playing card
 		card cardd;
 		card *played_card = &cardd;
@@ -917,8 +959,10 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 				storagedeck.add_card(temp_card);
 			}
 		}
-		//playing 100 times Smart-AI aginst Random-AI
-		for (n = 0; n <= 100; n++)
+		
+		//playing n times Smart-AI aginst Random-AI
+		
+		for (int i = 0; i <= n; i++)
 		{
 			while (win != true)
 			{
@@ -928,10 +972,12 @@ void human_Player(card &played_card, deck &main_deck, deck &temp_deck, player *p
 				{
 					if (turn % 2 == 0)
 					{
+						//SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, &SmartAIPlayer);
 						Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
 					}
 					else
 					{
+						//RandomAIPlayer.play(*played_card, *main_deck, *temp_deck, &RandomAIPlayer);
 						Random_AI_Player(*played_card, *main_deck, *temp_deck, &Random_AI);
 					}
 				}

@@ -3,17 +3,20 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Player.h"
+//#include "HumanPlayer.h"
+//#include "RandomAIPlayer.h"
+//#include"SmartAIPlayer.h"
 
 #include <iostream>
 #include <string>
 
-//Instanzen Smart-AI-Player, Random-AI-Player und Human-Player dann Instanzen der GameManager-Klasse
 
 
-class GameManager: public deck, player
+class GameManager: public deck, player 
 {
 public:
 	void displayIntro();
+	
 	//player(const player & other);
 	//const player & operator=(const player & other);
 	//~player();
