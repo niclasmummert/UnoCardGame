@@ -7,6 +7,8 @@
 #include <iostream>
 #include <string>
 
+//Instanzen Smart-AI-Player, Random-AI-Player und Human-Player dann Instanzen der GameManager-Klasse
+
 
 class GameManager: public deck, player
 {
