@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "HumanPlayer.h"
 #include "RandomAIPlayer.h"
-#include"SmartAIPlayer.h"
+#include "SmartAIPlayer.h"
 
 #include <iostream>
 #include <string>
