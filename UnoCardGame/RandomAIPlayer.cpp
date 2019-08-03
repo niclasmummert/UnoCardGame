@@ -57,7 +57,7 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 					{
 						curr_player->hand_remove(index);
 						temp_deck.add_card(temp);
-						playing_card = temp;
+						playing_card = &temp;
 						//choosing random color
 						if (playing_card.color == wild)
 						{
@@ -126,4 +126,8 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 			}
 		
 		}
+}
+
+RandomAIPlayer::RandomAIPlayer()
+{
 }

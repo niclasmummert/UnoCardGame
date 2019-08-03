@@ -16,7 +16,7 @@ bool AI_Value = false;
 //bool win = false;
 //bool force_draw_bool = false;
 //unsigned int Random_AI_win = 0;
-unsigned int Smart_AI_win = 0;
+//unsigned int Smart_AI_win = 0;
 
 //void Random_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
 //void Smart_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
@@ -24,6 +24,7 @@ unsigned int Smart_AI_win = 0;
 
 void start_game_flow(bool);
 void start_test_flow(size_t);
+bool player::win;
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -357,13 +358,13 @@ void start_game_flow(bool Smart_AI_Value)
 		// calling the player-Functions depending on which opponent you choose
 		if (Smart_AI_Value == true)
 		{
-			while (win != true)
+			while ( player::win != true)
 			{
 
 				//Smart_AI_Player against human_Player
-				for (turn = 0; turn < 1000; turn++)
+				for (player::turn = 0; player::turn < 1000; player::turn++)
 				{
-					if (turn % 2 == 0)
+					if (player::turn % 2 == 0)
 					{
 						//Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
 						SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, &SmartAIPlayer);
@@ -378,13 +379,13 @@ void start_game_flow(bool Smart_AI_Value)
 		}
 		else if (Smart_AI_Value == false)
 		{
-			while (win != true)
+			while ( player::win != true)
 			{
 
 				//Random_AI_Player against human_Player
-				for (turn = 0; turn < 1000; turn++)
+				for (player::turn = 0; player::turn < 1000; player::turn++)
 				{
-					if (turn % 2 == 0)
+					if (player::turn % 2 == 0)
 					{
 						//Random_AI_Player(* played_card, *main_deck, *temp_deck,  &Random_AI);
 						RandomAIPlayer.play(*played_card, *main_deck, *temp_deck, &RandomAIPlayer);
@@ -915,12 +916,12 @@ void start_test_flow(size_t n)
 		//playing n times Smart-AI aginst Random-AI
 		for (unsigned int i = 0; i <= n; i++)
 		{
-			while (win != true)
+			while (player::win != true)
 			{
 				//Smart_AI_Player against AI_Player for testing
-				for (turn = 0; turn < 1000; turn++)
+				for (player::turn = 0; player::turn < 1000; player::turn++)
 				{
-					if (turn % 2 == 0)
+					if (player::turn % 2 == 0)
 					{
 						SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, &SmartAIPlayer);
 						//Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
@@ -933,6 +934,6 @@ void start_test_flow(size_t n)
 				}
 			}
 		}
-		std::cout << "Smart-AI-Player wins with a percentage of: " <<  (Smart_AI_win/n)*100 << "%!"  << std::endl;
+		std::cout << "Smart-AI-Player wins with a percentage of: " <<  (player::Smart_AI_win/n)*100 << "%!"  << std::endl;
 }
 

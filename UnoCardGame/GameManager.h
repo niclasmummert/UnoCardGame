@@ -12,7 +12,7 @@
 
 
 
-class GameManager: public deck, player, HumanPlayer, SmartAIPlayer, RandomAIPlayer 
+class GameManager: public deck, HumanPlayer, SmartAIPlayer, RandomAIPlayer 
 {
 public:
 	void displayIntro();
@@ -27,8 +27,6 @@ public:
 	//void print() const;
 	//int get_size() const;
 	//card peek(int pos) const;
-
-
 };
 
 #endif // !GAMEMANAGER_H_

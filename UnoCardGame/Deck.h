@@ -16,7 +16,6 @@ public:
 	card draw();
 	void create();
 	int add_card(card temp_card);
-	//void quick_shuffle();
 	void print_deck();
 	int get_size();
 

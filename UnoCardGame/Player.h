@@ -24,8 +24,9 @@ public:
 	void print() const;
 	int get_size() const;
 	card peek(int pos) const;
-	static bool force_draw_bool = false;
+	bool force_draw_bool = false;
 	unsigned int Random_AI_win = 0;
+	unsigned int Smart_AI_win = 0;
 	unsigned int turn = 0;
 	Color FromString(const std::string & str, int x = 6);
 	bool win = false;

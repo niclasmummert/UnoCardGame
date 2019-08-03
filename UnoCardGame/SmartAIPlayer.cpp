@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck, SmartAIPlayer * play_array)
-	{
+{
 		int index = 0;
 		bool firstround = true;
 		player *curr_player = play_array;
@@ -145,5 +145,9 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 			std::cout << "The Smart-AI-Player let you skip this round" << std::endl;
 		}
 		index += 1;
-	}
+}
+
+SmartAIPlayer::SmartAIPlayer()
+{
+}
 

@@ -11,7 +11,7 @@
 void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, HumanPlayer *play_array)
 {
 	//player *curr_player = play_array[1];
-	HumanPlayer curr_player = play_array;
+	HumanPlayer *curr_player = &play_array;
 	//std::system("CLS");
 
 		//checking the played_card if player have to pick up card
@@ -180,8 +180,12 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, Huma
 	{
 		std::cout << "Remaining cards: " << curr_player.get_size() << std::endl;
 		std::cout << std::endl;
-		std::cout << "These are: " << curr_player.print() << std::endl;
+		std::cout << "These are: " curr_player.print();
 	}
 	std::cout << "Played card: " << played_card << std::endl;
+}
+
+HumanPlayer::HumanPlayer()
+{
 }
 
