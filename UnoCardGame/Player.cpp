@@ -112,6 +112,52 @@ card player::peek(int pos) const
 	return temp_elem->data;
 }
 
+//Function for generating a color
+Color player::FromString(const std::string & str, int x)
+{
+	if (x == 6)
+	{
+		if (str == "red")
+		{
+			return red;
+		}
+		else if (str == "green")
+		{
+			return green;
+		}
+		else if (str == "blue")
+		{
+			return blue;
+		}
+		else if (str == "yellow")
+		{
+			return yellow;
+		}
+		else return wild;
+	}
+	else if (str == "zero")
+	{
+		if (x == 1)
+		{
+			return red;
+		}
+		else if (x == 2)
+		{
+			return green;
+		}
+		else if (x == 3)
+		{
+			return blue;
+		}
+		else if (x == 4)
+		{
+			return yellow;
+		}
+		else return wild;
+	}
+	else return wild;
+}
+
 void player::copy(const player & other)
 {
 	size = other.size;

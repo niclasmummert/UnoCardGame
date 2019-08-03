@@ -12,10 +12,10 @@
 
 bool AI_Value = false;
 //bool testing = false;
-unsigned int turn = 0;
-bool win = false;
-bool force_draw_bool = false;
-unsigned int Random_AI_win = 0;
+//unsigned int turn = 0;
+//bool win = false;
+//bool force_draw_bool = false;
+//unsigned int Random_AI_win = 0;
 unsigned int Smart_AI_win = 0;
 
 //void Random_AI_Player(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]);
@@ -258,53 +258,6 @@ void GameManager::displayIntro()
 
 }
 
-//Function for generating a color
-Color FromString(const std::string & str, int x = 6)
-{
-	if (x == 6) 
-	{
-		if (str == "red")
-		{
-			return red;
-		}
-		else if (str == "green")
-		{
-			return green;
-		}
-		else if (str == "blue")
-		{
-			return blue;
-		}
-		else if (str == "yellow")
-		{
-			return yellow;
-		}
-		else return wild;
-	}
-	else if (str == "zero")
-	{
-		if ( x == 1)
-		{
-			return red;
-		}
-		else if ( x == 2)
-		{
-			return green;
-		}
-		else if (x == 3)
-		{
-			return blue;
-		}
-		else if (x == 4)
-		{
-			return yellow;
-		}
-		else return wild;
-	}
-	else return wild;
-
-}
-
 //initializing the basics like desks, player and cards. Calling the players depending on who is playing aigainst whom
 void start_game_flow(bool Smart_AI_Value)
 {
@@ -332,6 +285,7 @@ void start_game_flow(bool Smart_AI_Value)
 	//initializing handdeck of each player
 	for (int i = 0; i < amount_players; i++)
 	{
+		
 		if (i = 0 && AI_Value == false)
 		{
 			for (int k = 0; k < 7; k++)
@@ -349,6 +303,7 @@ void start_game_flow(bool Smart_AI_Value)
 				temp_card = spezialdeck.draw();
 				SmartAIPlayer.hand_add(temp_card);
 			}
+		}
 		else
 		{
 			for (int k = 0; k < 7; k++)
@@ -358,13 +313,14 @@ void start_game_flow(bool Smart_AI_Value)
 				HumanPlayer.hand_add(temp_card);
 			}
 		}
+		
 		/*for (int k = 0; k < 7; k++)
 		{
 			card temp_card;
 			temp_card = spezialdeck.draw();
 			play_array[i].hand_add(temp_card);
 		}*/
-		}
+		
 
 		//TO-DO
 		/*player *Random_AI = &play_array[0];
@@ -917,7 +873,7 @@ void start_test_flow(size_t n)
 				}
 			}
 			else
-			{for (int k = 0; k < 7; k++)
+			{	for (int k = 0; k < 7; k++)
 				{
 					card temp_card;
 					temp_card = spezialdeck.draw();
@@ -957,7 +913,7 @@ void start_test_flow(size_t n)
 		}
 
 		//playing n times Smart-AI aginst Random-AI
-		for (int i = 0; i <= n; i++)
+		for (unsigned int i = 0; i <= n; i++)
 		{
 			while (win != true)
 			{

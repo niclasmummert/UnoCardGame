@@ -8,10 +8,10 @@
 #include <string>
 #include <stdlib.h>
 
-void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[] = NULL)
+void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, HumanPlayer *play_array)
 {
 	//player *curr_player = play_array[1];
-	HumanPlayer curr_player = play_array[1];
+	HumanPlayer curr_player = play_array;
 	//std::system("CLS");
 
 		//checking the played_card if player have to pick up card
@@ -25,7 +25,7 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, play
 			for (int i = 0; i < 2; i++)
 			{
 				draw_2 = main_deck.draw();
-				curr_player->hand_add(draw_2);
+				curr_player.hand_add(draw_2);
 			}
 		}
 		//picking up 4 cards
@@ -36,21 +36,21 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, play
 			for (int i = 0; i < 4; i++)
 			{
 				draw_4 = main_deck.draw();
-				curr_player->hand_add(draw_4);
+				curr_player.hand_add(draw_4);
 			}
 		}
 		force_draw_bool = false;
 	}
 
 	std::cout << "Number of Cards remaining: " << std::endl;
-	std::cout << curr_player->get_size() << std::endl;
+	std::cout << curr_player.get_size() << std::endl;
 
 	std::cout << "Played Card: " << played_card << std::endl;
-	curr_player->print();
+	curr_player.print();
 
 	int check_flag = 0;
 	int index = 0;
-	int size = curr_player->get_size();
+	int size = curr_player.get_size();
 
 	//Human Player's turn
 	while (check_flag == 0)
@@ -91,7 +91,7 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, play
 					//picking up the drawn card
 					else if (temp_play == "n")
 					{
-						curr_player->hand_add(draw_temp);
+						curr_player.hand_add(draw_temp);
 						play_draw_flag = 1;
 					}
 				}
@@ -99,7 +99,7 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, play
 			//Human Player has to pick up the card
 			else
 			{
-				curr_player->hand_add(draw_temp);
+				curr_player.hand_add(draw_temp);
 			}
 			check_flag = 1;
 		}
@@ -107,10 +107,10 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, play
 		//playing a card of the handdeck
 		if (index >= 0 && index < size)
 		{
-			card temp = curr_player->peek(index);
+			card temp = curr_player.peek(index);
 			if (temp == played_card)
 			{
-				curr_player->hand_remove(index);
+				curr_player.hand_remove(index);
 				temp_deck.add_card(temp);
 				played_card = temp;
 
@@ -145,7 +145,7 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, play
 					force_draw_bool = true;
 				}
 				//checking if played card is SKIP or REVERSE
-				else if ((played_card.number == 11 || played_card.number == 12) && force_draw_bool == true)
+ 				else if ((played_card.number == 11 || played_card.number == 12) && force_draw_bool == true)
 				{
 					turn += 2;
 				}
@@ -164,12 +164,12 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, play
 	}
 
 	//Player calls "UNO!"
-	if (curr_player->get_size() == 1)
+	if (curr_player.get_size() == 1)
 	{
-		curr_player->uno();
+		curr_player.uno();
 	}
 	//Human-Player won
-	else if (curr_player->get_size() == 0)
+	else if (curr_player.get_size() == 0)
 	{
 		win = true;
 		std::cout << "You have won the game!" << std::endl;
@@ -178,9 +178,9 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, play
 	//Number of Cards left in the handdeck
 	else
 	{
-		std::cout << "Remaining cards: " << curr_player->get_size() << std::endl;
+		std::cout << "Remaining cards: " << curr_player.get_size() << std::endl;
 		std::cout << std::endl;
-		std::cout << "These are: " << curr_player->print() << std::endl;
+		std::cout << "These are: " << curr_player.print() << std::endl;
 	}
 	std::cout << "Played card: " << played_card << std::endl;
 }

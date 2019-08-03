@@ -3,19 +3,20 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Player.h"
-//#include "HumanPlayer.h"
-//#include "RandomAIPlayer.h"
-//#include"SmartAIPlayer.h"
+#include "HumanPlayer.h"
+#include "RandomAIPlayer.h"
+#include"SmartAIPlayer.h"
 
 #include <iostream>
 #include <string>
 
 
 
-class GameManager: public deck, player 
+class GameManager: public deck, player, HumanPlayer, SmartAIPlayer, RandomAIPlayer 
 {
 public:
 	void displayIntro();
+	//static bool force_draw_bool = false;
 	
 	//player(const player & other);
 	//const player & operator=(const player & other);

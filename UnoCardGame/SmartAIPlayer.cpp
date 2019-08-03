@@ -8,11 +8,11 @@
 #include <string>
 #include <stdlib.h>
 
-void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck, player * play_array[])
+void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck, SmartAIPlayer * play_array)
 	{
 		int index = 0;
 		bool firstround = true;
-		player *curr_player = play_array[0];
+		player *curr_player = play_array;
 		//->SmartAIPlayer *curr_player = &SmartAIPlayer -> wenn nicht funktioniert, funktioniert überladene Operator nicht
 		int size = curr_player->get_size();
 
@@ -52,7 +52,7 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 			Color temp_color = FromString("zero", coincidence);
 			temp_card_mock.color = temp_color;
 			temp_card_mock.number = 11;
-			firstround = false
+			firstround = false;
 		}
 		//If opponent plays a WILD Card, Smart-AI-Players plays automaticly a WILD +4
 		if (played_card.color == wild)

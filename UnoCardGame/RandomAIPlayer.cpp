@@ -10,16 +10,17 @@
 
 
 
-void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck, player * play_array[])
+void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck, RandomAIPlayer * play_array)
 {
-	{
-			player *curr_player = play_array[0];
+	{		
+			player *curr_player = play_array;
+			card *playing_card = &played_card;
 		
 			//checking the played_card if player have to pick up card
 			if (force_draw_bool)
 			{
 				//picking up 2 cards
-				if (played_card.number == 10)
+				if (playing_card.number == 10)
 				{
 					card draw_2;
 					for (int i = 0; i < 2; i++)
@@ -30,7 +31,7 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 				}
 		
 				//picking up 4 cards
-				if (played_card.number == 14)
+				if (playing_card.number == 14)
 				{
 					card draw_4;
 					for (int i = 0; i < 4; i++)
@@ -52,13 +53,13 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 				{
 					card temp = curr_player->peek(index);
 					//checking if card is playable
-					if (temp == played_card)
+					if (temp == playing_card)
 					{
 						curr_player->hand_remove(index);
 						temp_deck.add_card(temp);
-						played_card = temp;
+						playing_card = temp;
 						//choosing random color
-						if (played_card.color == wild)
+						if (playing_card.color == wild)
 						{
 							int check_color = 0;
 							Color temp_color;
@@ -71,7 +72,7 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 		
 								if (temp_color != wild)
 								{
-									played_card.color = temp_color;
+									playing_card.color = temp_color;
 									check_color = 1;
 									std::cout << "AI-Player choose the color:" << temp_color << std::endl;
 								}
@@ -104,20 +105,20 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 					win = true;
 				}
 		
-				if ((played_card.number == 11 || played_card.number == 12) && force_draw_bool == true)
+				if ((playing_card.number == 11 || playing_card.number == 12) && force_draw_bool == true)
 				{
 					turn += 2;
 				}
 		
 				std::system("CLS");
-				std::cout << "Played card: " << played_card << std::endl;
+				std::cout << "Played card: " << playing_card << std::endl;
 				//checking if playing card is +2 or +4
-				if (played_card.number == 10 || played_card.number == 14)
+				if (playing_card.number == 10 || playing_card.number == 14)
 				{
 					force_draw_bool = true;
 				}
 				//informing opponent that he misses a round
-				else if (played_card.number == 11 || played_card.number == 12)
+				else if (playing_card.number == 11 || playing_card.number == 12)
 				{
 					std::cout << "The AI-Player let you skip this round" << std::endl;
 				}
