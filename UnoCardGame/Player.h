@@ -2,17 +2,18 @@
 #ifndef PLAYER_H_
 #include "Card.h"
 
+//auf Handhabung achten!!!
 
 class player
 {
 public:
-	//virtual void play(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]) = 0;
+	virtual void play(card &played_card, deck &main_deck, deck &temp_deck, player *play_array[]) = 0;
 	//wird nicht funktionieren wegen Konstruktor!?
-	player();
+	//player();
 	//virtual player() = 0;  -> eventuell initialisierung mit anderem Namen damit != Konstruktor + deklaration in Card? -> !!override!! -> braucht Typ?
 	//wird nicht funktionieren wegen Konstruktor!?
 	//TO-DO wegen copy(other)
-	player(const player & other);
+	void copy(const player & other);
 	//virtual player(const player & other) = 0; -> eventuell initialisierung mit anderem Namen damit != Konstruktor + deklaration in Card?
 	const player & operator=(const player & other);
 	~player();
@@ -38,7 +39,7 @@ protected:
 
 	card_elem * head;
 	int size;
-	void copy(const player & other);
+	//void copy(const player & other);
 	void clear();
 };
 

@@ -3,16 +3,16 @@
 #include "Card.h"
 #include <iostream>
 
-player::player()
-{
-	head = NULL;
-	size = 0;
-}
+//player::player()
+//{
+//	head = NULL;
+//	size = 0;
+//}
 
-player::player(const player & other)
-{
-	copy(other);
-}
+//player::player(const player & other)
+//{
+//	copy(other);
+//}
 
 const player & player::operator=(const player & other)
 {
