@@ -7,7 +7,7 @@ class HumanPlayer :
 	public player
 {
 public:
-  virtual void play(card &played_card, deck &main_deck, deck &temp_deck, HumanPlayer play_array) override;
+  virtual void play(card &played_card, deck &main_deck, deck &temp_deck, HumanPlayer play_array);
   HumanPlayer();
 };
 

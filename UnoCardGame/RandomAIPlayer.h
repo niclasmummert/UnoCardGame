@@ -7,7 +7,7 @@ class RandomAIPlayer:
 	public player
 {
 public:
-	virtual void play(card &played_card, deck &main_deck, deck &temp_deck, RandomAIPlayer play_array) override;
+	virtual void play(card &played_card, deck &main_deck, deck &temp_deck, RandomAIPlayer play_array);
 	RandomAIPlayer();
 };
 

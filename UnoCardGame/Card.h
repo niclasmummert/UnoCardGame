@@ -9,8 +9,6 @@ enum Color
 	wild, red, green, blue, yellow
 };
 
-
-
 class card
 {
 public:

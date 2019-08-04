@@ -4,10 +4,10 @@
 #include "Deck.h"
 
 //auf Handhabung achten!!!
-
 class player
 {
 public:
+	//Methods of the base class Player
 	virtual void play(card &played_card, deck &main_deck, deck &temp_deck, player play_array);
 	//wird nicht funktionieren wegen Konstruktor!?
 	//player();
@@ -24,11 +24,13 @@ public:
 	void print() const;
 	int get_size() const;
 	card peek(int pos) const;
+	Color FromString(const std::string & str, int x = 6);
+	
+	//static Member, beeing changed during the play and initialized in the derived classes
 	static bool force_draw_bool;
 	static unsigned int Random_AI_win;
 	static unsigned int Smart_AI_win;
 	static unsigned int turn;
-	Color FromString(const std::string & str, int x = 6);
 	static bool win;
 
 protected:

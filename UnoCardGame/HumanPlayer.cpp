@@ -11,7 +11,7 @@
 void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, HumanPlayer play_array)
 {
 	//player *curr_player = play_array[1];
-	const HumanPlayer *curr_player = &play_array;
+	HumanPlayer *curr_player = &play_array;
 	//std::system("CLS");
 
 		//checking the played_card if player have to pick up card
@@ -70,7 +70,6 @@ void HumanPlayer::play(card &played_card, deck &main_deck, deck &temp_deck, Huma
 			if (draw_temp == played_card && draw_temp.color != wild)
 			{
 				int play_draw_flag = 0;
-
 				while (play_draw_flag == 0)
 				{
 					std::string temp_play;

@@ -36,7 +36,7 @@ static unsigned int Smart_AI_win = 0;
 void GameManager::displayIntro()
 {
 	std::cout << "Welcome to the ultimative UNO Card Game" << std::endl;
-	std::cout << "What you wanna do?" << std::endl;
+	std::cout << "What you wanna do?" << std::endl << std::endl;
 	std::cout << "Type 1 to read the rules" << std::endl;
 	std::cout << "Type 2 to play against an AI opponent" << std::endl;
 	std::cout << "Type 3 to play against a very good AI opponent" << std::endl;
@@ -44,7 +44,6 @@ void GameManager::displayIntro()
 	std::cout << "Type 5 for ending the UNO card game" << std::endl;
 
 	int i = 0;
-
 	std::cin >> i;
 
 	switch (i)
@@ -67,7 +66,7 @@ void GameManager::displayIntro()
 		//Play against AI-Player
 	case 2: {bool AI_Value = false;
 		start_game_flow(AI_Value);
-		break; }
+		break;}
 
 		//Play against Smart-AI-Player
 	case 3:   AI_Value = true;
@@ -92,7 +91,6 @@ void GameManager::displayIntro()
 				start_test_flow(n);
 			}
 			else { break; }
-		
 		break;
 
 		//End Game
@@ -208,7 +206,6 @@ void start_game_flow(bool Smart_AI_Value)
 		{
 			while (win != true)
 			{
-
 				//Smart_AI_Player against human_Player
 				for (turn = 0; turn < 1000; turn++)
 				{
@@ -227,7 +224,7 @@ void start_game_flow(bool Smart_AI_Value)
 		}
 		else if (Smart_AI_Value == false)
 		{
-			while ( win != true)
+			while (win != true)
 			{
 
 				//Random_AI_Player against human_Player
@@ -699,16 +696,12 @@ void start_test_flow(size_t n)
 		//-> Instanzen initialisieren
 		SmartAIPlayer SmartAIPlayer;
 		RandomAIPlayer RandomAIPlayer;
-
-
+		
 		//initializing deck
 		deck spezialdeck;
 		deck *main_deck = &spezialdeck;
 		spezialdeck.create();
 		spezialdeck.shuffle();
-
-		//play_array = new player[2];
-		//->hinfällig
 
 		//initializing handdeck of each player
 		for (int i = 0; i < amount_players; i++)
@@ -764,12 +757,12 @@ void start_test_flow(size_t n)
 		//playing n times Smart-AI aginst Random-AI
 		for (unsigned int i = 0; i <= n; i++)
 		{
-			while (player::win != true)
+			while (win != true)
 			{
 				//Smart_AI_Player against AI_Player for testing
-				for (player::turn = 0; turn < 1000; turn++)
+				for (turn = 0; turn < 1000; turn++)
 				{
-					if (player::turn % 2 == 0)
+					if (turn % 2 == 0)
 					{
 						SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, SmartAIPlayer);
 						//Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
@@ -782,6 +775,6 @@ void start_test_flow(size_t n)
 				}
 			}
 		}
-		std::cout << "Smart-AI-Player wins with a percentage of: " <<  (player::Smart_AI_win/n)*100 << "%!"  << std::endl;
+		std::cout << "Smart-AI-Player wins with a percentage of: " <<  (Smart_AI_win/n)*100 << "%!"  << std::endl;
 }
 

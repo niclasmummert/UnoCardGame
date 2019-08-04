@@ -12,7 +12,7 @@
 void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck, RandomAIPlayer play_array)
 {
 	{		
-			player *curr_player = &play_array;
+		RandomAIPlayer *curr_player = &play_array;
 			card *playing_card = &played_card;
 		
 			//checking the played_card if player have to pick up card

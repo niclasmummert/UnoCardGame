@@ -12,7 +12,7 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 {
 		int index = 0;
 		bool firstround = true;
-		player *curr_player = &play_array;
+		SmartAIPlayer *curr_player = &play_array;
 		//->SmartAIPlayer *curr_player = &SmartAIPlayer -> wenn nicht funktioniert, funktioniert überladene Operator nicht
 		int size = curr_player.get_size();
 
