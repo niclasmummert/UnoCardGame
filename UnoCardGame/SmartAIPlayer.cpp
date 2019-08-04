@@ -14,7 +14,7 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 		bool firstround = true;
 		SmartAIPlayer *curr_player = &play_array;
 		//->SmartAIPlayer *curr_player = &SmartAIPlayer -> wenn nicht funktioniert, funktioniert überladene Operator nicht
-		int size = curr_player.get_size();
+		int size = curr_player->get_size();
 
 		//checking the played_card if player have to pick up card	
 		if (force_draw_bool)
@@ -26,7 +26,7 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 				for (int i = 0; i < 2; i++)
 				{
 					draw_2 = main_deck.draw();
-					curr_player.hand_add(draw_2);
+					curr_player->hand_add(draw_2);
 				}
 			}
 			//picking up 4 cards
@@ -36,7 +36,7 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 				for (int i = 0; i < 4; i++)
 				{
 					draw_4 = main_deck.draw();
-					curr_player.hand_add(draw_4);
+					curr_player->hand_add(draw_4);
 				}
 			}
 			force_draw_bool = false;
@@ -50,7 +50,7 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 			static bool force_draw_bool = false;
 			std::srand(time_t(NULL));
 			int coincidence = rand() % 4 + 1;
-			Color temp_color = curr_player.FromString("zero", coincidence);
+			Color temp_color = curr_player->FromString("zero", coincidence);
 			temp_card_mock.color = temp_color;
 			temp_card_mock.number = 11;
 			firstround = false;
@@ -67,7 +67,7 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 			temp_card_mock.number = 10;
 			std::srand(time_t(NULL));
 			int coincidence = rand() % 4 + 1;
-			Color temp_color = curr_player.FromString("zero", coincidence);
+			Color temp_color = curr_player->FromString("zero", coincidence);
 			temp_card_mock.color = temp_color;
 		}
 		//If opponent plays a +4, Smart-AI-Player also plays a +4
@@ -97,7 +97,7 @@ void SmartAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck,
 				//random color
 				std::srand(time_t(NULL));
 				int coincidence = rand() % 4 + 1;
-				temp_color = curr_player.FromString("zero", coincidence);
+				temp_color = curr_player->FromString("zero", coincidence);
 
 				if (temp_color != wild)
 				{
