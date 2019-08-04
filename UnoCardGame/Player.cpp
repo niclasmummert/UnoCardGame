@@ -158,6 +158,10 @@ Color player::FromString(const std::string & str, int x)
 	else return wild;
 }
 
+void player::play(card & played_card, deck & main_deck, deck & temp_deck, player play_array)
+{
+}
+
 void player::copy(const player & other)
 {
 	size = other.size;

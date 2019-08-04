@@ -8,7 +8,7 @@
 class player
 {
 public:
-	virtual void play(card &played_card, deck &main_deck, deck &temp_deck, player *play_array) = 0;
+	virtual void play(card &played_card, deck &main_deck, deck &temp_deck, player play_array);
 	//wird nicht funktionieren wegen Konstruktor!?
 	//player();
 	//virtual player() = 0;  -> eventuell initialisierung mit anderem Namen damit != Konstruktor + deklaration in Card? -> !!override!! -> braucht Typ?
@@ -24,12 +24,12 @@ public:
 	void print() const;
 	int get_size() const;
 	card peek(int pos) const;
-	bool force_draw_bool = false;
-	unsigned int Random_AI_win = 0;
-	unsigned int Smart_AI_win = 0;
-	unsigned int turn = 0;
+	static bool force_draw_bool;
+	static unsigned int Random_AI_win;
+	static unsigned int Smart_AI_win;
+	static unsigned int turn;
 	Color FromString(const std::string & str, int x = 6);
-	bool win = false;
+	static bool win;
 
 protected:
 	

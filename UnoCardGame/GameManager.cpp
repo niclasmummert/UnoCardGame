@@ -24,163 +24,11 @@ bool AI_Value = false;
 
 void start_game_flow(bool);
 void start_test_flow(size_t);
-bool player::win;
+static bool win = false;
+static unsigned int turn = 0;
+static unsigned int Random_AI_win = 0;
+static unsigned int Smart_AI_win = 0;
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------//
-//------------------------------------------------------------------------------------------------------------------------------------------------------------//
-
-
-
-//player::player()
-//{
-//	head = NULL;
-//	size = 0;
-//}
-
-//player::player(const player & other)
-//{
-//	copy(other);
-//}
-
-//const player & player::operator=(const player & other)
-//{
-//	if (this != &other)
-//	{
-//		clear();
-//		copy(other);
-//	}
-//	return *this;
-//}
-
-//player::~player()
-//{
-//	clear();
-//}
-
-//card player::hand_remove(int pos)
-//{
-//	if (pos < 0 || pos >= size)
-//	{
-//		return card();
-//	}
-//
-//	card_elem * prev_ptr = head;
-//	card_elem * target = prev_ptr->next;
-//	card temp_card;
-//	int temp_pos = pos;
-//
-//	if (pos == 0)
-//	{
-//		temp_card = head->data;
-//		head = head->next;
-//		delete prev_ptr;
-//		size--;
-//		return temp_card;
-//	}
-//
-//	while (temp_pos > 1)
-//	{
-//		prev_ptr = prev_ptr->next;
-//		target = prev_ptr->next;
-//		temp_pos--;
-//	}
-//
-//	prev_ptr->next = target->next;
-//	temp_card = target->data;
-//	delete target;
-//	size--;
-//	return temp_card;
-//}
-
-//void player::hand_add(card temp_card)
-//{
-//	card_elem * temp_ptr;
-//	temp_ptr = new card_elem();
-//	temp_ptr->data = temp_card;
-//	temp_ptr->next = head;
-//	head = temp_ptr;
-//	size++;
-//}
-
-//void player::uno()
-//{
-//	std::cout << "'UNO' !!! " << std::endl;
-//}
-
-//void player::print() const
-//{
-//	int temp_size = size;
-//	int i = 0;
-//	card_elem * temp_ptr = head;
-//	while (temp_size > 0)
-//	{
-//		std::cout << i << ":  " << temp_ptr->data << std::endl;
-//		temp_ptr = temp_ptr->next;
-//		i++;
-//		temp_size--;
-//	}
-//}
-
-//int player::get_size() const
-//{
-//	return size;
-//}
-
-//card player::peek(int pos) const
-//{
-//	int temp_pos = pos;
-//	card_elem * temp_elem = head;
-//	while (temp_pos > 0)
-//	{
-//		temp_elem = temp_elem->next;
-//		temp_pos--;
-//	}
-//	return temp_elem->data;
-//}
-
-//void player::copy(const player & other)
-//{
-//	size = other.size;
-//
-//	if (size > 0)
-//	{
-//		head = new card_elem();
-//		head->data = other.head->data;
-//	}
-//	else
-//	{
-//		head = NULL;
-//		return;
-//	}
-//
-//	card_elem * other_ptr = other.head->next;
-//	card_elem * temp_ptr;
-//	card_elem * prev_ptr = head;
-//
-//	for (int i = 1; i < size; i++)
-//	{
-//		temp_ptr = new card_elem();
-//		prev_ptr->next = temp_ptr;
-//		temp_ptr->data = other_ptr->data;
-//		prev_ptr = temp_ptr;
-//		temp_ptr = NULL;
-//		other_ptr = other_ptr->next;
-//	}
-//}
-
-//void player::clear()
-//{
-//	card_elem * temp_ptr = head;
-//	card_elem * next_ptr;
-//	while (size > 0)
-//	{
-//		next_ptr = temp_ptr->next;
-//		delete temp_ptr;
-//		temp_ptr = next_ptr;
-//		size--;
-//	}
-//	head = NULL;
-//}
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -358,42 +206,42 @@ void start_game_flow(bool Smart_AI_Value)
 		// calling the player-Functions depending on which opponent you choose
 		if (Smart_AI_Value == true)
 		{
-			while ( player::win != true)
+			while (win != true)
 			{
 
 				//Smart_AI_Player against human_Player
-				for (player::turn = 0; player::turn < 1000; player::turn++)
+				for (turn = 0; turn < 1000; turn++)
 				{
-					if (player::turn % 2 == 0)
+					if (turn % 2 == 0)
 					{
 						//Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
-						SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, &SmartAIPlayer);
+						SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, SmartAIPlayer);
 					}
 					else
 					{
 						//human_Player(*played_card, *main_deck, *temp_deck, &Human_Player);
-						HumanPlayer.play(*played_card, *main_deck, *temp_deck, &HumanPlayer);
+						HumanPlayer.play(*played_card, *main_deck, *temp_deck, HumanPlayer);
 					}
 				}
 			}
 		}
 		else if (Smart_AI_Value == false)
 		{
-			while ( player::win != true)
+			while ( win != true)
 			{
 
 				//Random_AI_Player against human_Player
-				for (player::turn = 0; player::turn < 1000; player::turn++)
+				for (turn = 0; turn < 1000; turn++)
 				{
-					if (player::turn % 2 == 0)
+					if (turn % 2 == 0)
 					{
 						//Random_AI_Player(* played_card, *main_deck, *temp_deck,  &Random_AI);
-						RandomAIPlayer.play(*played_card, *main_deck, *temp_deck, &RandomAIPlayer);
+						RandomAIPlayer.play(*played_card, *main_deck, *temp_deck, RandomAIPlayer);
 					}
 					else
 					{
 						//human_Player(* played_card, *main_deck, *temp_deck, &Human_Player);
-						HumanPlayer.play(*played_card, *main_deck, *temp_deck, &HumanPlayer);
+						HumanPlayer.play(*played_card, *main_deck, *temp_deck, HumanPlayer);
 					}
 				}
 			}
@@ -919,16 +767,16 @@ void start_test_flow(size_t n)
 			while (player::win != true)
 			{
 				//Smart_AI_Player against AI_Player for testing
-				for (player::turn = 0; player::turn < 1000; player::turn++)
+				for (player::turn = 0; turn < 1000; turn++)
 				{
 					if (player::turn % 2 == 0)
 					{
-						SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, &SmartAIPlayer);
+						SmartAIPlayer.play(*played_card, *main_deck, *temp_deck, SmartAIPlayer);
 						//Smart_AI_Player(*played_card, *main_deck, *temp_deck, &Smart_AI);
 					}
 					else
 					{
-						RandomAIPlayer.play(*played_card, *main_deck, *temp_deck, &RandomAIPlayer);
+						RandomAIPlayer.play(*played_card, *main_deck, *temp_deck, RandomAIPlayer);
 						//Random_AI_Player(*played_card, *main_deck, *temp_deck, &Random_AI);
 					}
 				}

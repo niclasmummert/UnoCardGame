@@ -9,11 +9,10 @@
 #include <stdlib.h>
 
 
-
-void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck, RandomAIPlayer * play_array)
+void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck, RandomAIPlayer play_array)
 {
 	{		
-			player *curr_player = play_array;
+			player *curr_player = &play_array;
 			card *playing_card = &played_card;
 		
 			//checking the played_card if player have to pick up card
@@ -26,7 +25,7 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 					for (int i = 0; i < 2; i++)
 					{
 						draw_2 = main_deck.draw();
-						curr_player->hand_add(draw_2);
+						curr_player.hand_add(draw_2);
 					}
 				}
 		
@@ -37,13 +36,15 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 					for (int i = 0; i < 4; i++)
 					{
 						draw_4 = main_deck.draw();
-						curr_player->hand_add(draw_4);
+						curr_player.hand_add(draw_4);
 					}
 				}
 				force_draw_bool = false;
 			}
+
+			static bool force_draw_bool = false;
 			int check_flag = 0;
-			int size = curr_player->get_size();
+			int size = curr_player.get_size();
 		
 			while (check_flag == 0)
 			{
@@ -51,11 +52,11 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 				int index = 0;
 				for (index; index <= size; index++)
 				{
-					card temp = curr_player->peek(index);
+					card temp = curr_player.peek(index);
 					//checking if card is playable
-					if (temp == playing_card)
+					if (&temp == playing_card)
 					{
-						curr_player->hand_remove(index);
+						curr_player.hand_remove(index);
 						temp_deck.add_card(temp);
 						playing_card = &temp;
 						//choosing random color
@@ -68,7 +69,7 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 							{
 								std::srand(time_t(NULL));
 								int coincidence = rand() % 4 + 1;
-								temp_color = FromString("zero", coincidence);
+								temp_color = curr_player.FromString("zero", coincidence);
 		
 								if (temp_color != wild)
 								{
@@ -90,12 +91,12 @@ void RandomAIPlayer::play(card & played_card, deck & main_deck, deck & temp_deck
 				//pick up a card
 				if (index > size)
 				{
-					curr_player->hand_add(main_deck.draw());
+					curr_player.hand_add(main_deck.draw());
 				}
 		
 				if (size == 1)
 				{
-					std::cout << "AI-Player calls "; curr_player->uno();
+					std::cout << "AI-Player calls "; curr_player.uno();
 				}
 				else if (size == 0)
 				{
